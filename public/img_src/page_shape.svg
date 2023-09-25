@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="543.427" height="519.232" viewBox="0 0 543.427 519.232">
+    <defs>
+        <clipPath id="clip-path">
+            <path id="사각형_60" data-name="사각형 60" style="fill:none" d="M0 0h543.427v503.379H0z"/>
+        </clipPath>
+        <style>
+            .cls-3{clip-path:url(#clip-path)}
+        </style>
+    </defs>
+    <g id="그룹_71" data-name="그룹 71" transform="translate(-395.037 -75.836)">
+        <g id="그룹_66" data-name="그룹 66" transform="translate(395.038 91.688)">
+            <path id="패스_61" data-name="패스 61" d="M451.928 2H2v484.832h538.647V77.418z" transform="translate(.39 .39)" style="fill:#fff"/>
+            <g id="그룹_63" data-name="그룹 63">
+                <g id="그룹_62" data-name="그룹 62" class="cls-3">
+                    <path id="패스_62" data-name="패스 62" d="M448.911 2H2v476.017h535.034V76.047z" transform="translate(2.196 1.526)" style="stroke-width:4px;stroke:#383838;stroke-miterlimit:10;fill:none"/>
+                </g>
+            </g>
+            <path id="사각형_61" data-name="사각형 61" transform="translate(10.158 487.82)" style="fill:#c6c6c6" d="M0 0h523.111v15.559H0z"/>
+            <g id="그룹_65" data-name="그룹 65">
+                <g id="그룹_64" data-name="그룹 64" class="cls-3">
+                    <path id="사각형_62" data-name="사각형 62" transform="translate(17.834 480.425)" style="stroke-width:4.04px;stroke:#383838;stroke-miterlimit:10;fill:none" d="M0 0h507.758v19.393H0z"/>
+                </g>
+            </g>
+        </g>
+        <g id="패스_63" data-name="패스 63" style="fill:#e5e5e5">
+            <path d="M83.974 94.515 1.837 72.507l18.49-69.01 63.647 91.018z" style="stroke:none" transform="rotate(-14.98 785.347 -3085.468)"/>
+            <path d="m20.944 6.996-17.27 64.45L80.386 92 20.944 6.996M19.712 0l67.85 97.03L0 73.567 19.712 0z" style="fill:#383838;stroke:none" transform="rotate(-14.98 785.347 -3085.468)"/>
+        </g>
+    </g>
+</svg>
