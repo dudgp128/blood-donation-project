@@ -66,7 +66,7 @@ const Cover = () => {
           <span className="copyright">NJ INTERACTIVE PROJECT</span>
         </div>
       </div>
-      <img src="./img_src/scroll_mark.png" alt="뭐" />
+      <img src="./img_src/scroll_mark.png" alt="scroll" />
     </Content>
   );
 };
