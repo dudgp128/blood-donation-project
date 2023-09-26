@@ -5,9 +5,10 @@ const isRowCSV = (valueArray) => {
 };
 
 const rowCSV = (csv) => {
-  const column = Object.values(csv[0])[0];
-  let values = Object.values(csv[1]);
-  return { column, values };
+  let values = Object.values(csv[1]).filter(
+    (value) => typeof value === "number"
+  );
+  return { values };
 };
 
 const columnCSV = (csv) => {
@@ -17,9 +18,11 @@ const columnCSV = (csv) => {
 
   for (let i of csv) {
     let [year_data, people_data, time_data] = Array.from(Object.values(i));
-    year.push(year_data);
-    people.push(people_data);
-    time.push(time_data);
+    if (year_data && people_data && time_data) {
+      year.push(year_data);
+      people.push(people_data);
+      time.push(time_data);
+    }
   }
 
   return { year, people, time };
