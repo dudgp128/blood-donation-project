@@ -57,6 +57,12 @@ const AMOUNT_BLOOD_SUPPLIED_NUMBER_DONORS = () => {
     }
   }, [data]);
 
+  const setTooltip = ({ year, circle_color, column, value }) => {
+    return `<p style="font-size:10px">${year}</p>
+     <br/>
+      <span style="color:${circle_color}">\u25CF</span> ${column} : <b>${value}</b>`;
+  };
+
   const renderChart = () => {
     const ydata = data.donation_people.people.map((e, i) => ({
       y: e,
@@ -152,40 +158,24 @@ const AMOUNT_BLOOD_SUPPLIED_NUMBER_DONORS = () => {
       tooltip: {
         formatter: function () {
           if (this.point.times === undefined) {
-            return (
-              '<p style="font-size:10px">' +
-              this.x +
-              "</p>" +
-              "<br/>" +
-              '<span style="color:' +
-              this.point.color +
-              '">\u25CF</span> ' +
-              this.series.name +
-              " : " +
-              "<b>" +
-              Highcharts.numberFormat(this.point.y, 0) +
-              "</b>"
-            );
+            return setTooltip({
+              year: this.x,
+              circle_color: this.point.color,
+              column: this.series.name,
+              value: Highcharts.numberFormat(this.point.y, 0),
+            });
           } else {
-            let supply_day = this.point.times.toFixed(2);
-            return (
-              '<p style="font-size:10px">' +
-              this.x +
-              "</p>" +
-              "<br/>" +
-              this.series.name +
-              " : " +
-              "<b>" +
-              Highcharts.numberFormat(this.point.y, 0) +
-              "</b>" +
-              "<br/>" +
-              '<span style="color:' +
-              this.point.color +
-              '">\u25CF</span> ' +
-              "인당 헌혈 횟수 : " +
-              "<b>" +
-              supply_day +
-              " 회</b>"
+            let time = this.point.times.toFixed(2);
+            return setTooltip({
+              year: this.x,
+              circle_color: this.point.color,
+              column: "인당 헌혈 횟수",
+              value: `${time} 회`,
+            }).concat(
+              `<br/> ${this.series.name} : <b> ${Highcharts.numberFormat(
+                this.point.y,
+                0
+              )}`
             );
           }
         },
