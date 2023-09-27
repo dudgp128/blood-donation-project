@@ -6,8 +6,8 @@ import { Fragment } from "react";
 
 const AMOUNT_BLOOD_SUPPLIED_NUMBER_DONORS = () => {
   const [data, setData] = useState({
-    blood_supply: [],
-    donation_people: [],
+    blood_supply: { column: "", values: [] },
+    donation_people: { year: [], people: [], time: [] },
   });
 
   const fetchDataAndUpdate = async (filename, key) => {
