@@ -1,8 +1,6 @@
 import Highcharts from "highcharts";
-import HighchartsReact from "highcharts-react-official";
-import fetchData from "./base";
 import { useEffect, useState } from "react";
-import { Fragment } from "react";
+import fetchData from "./base";
 
 const AMOUNT_BLOOD_SUPPLIED_NUMBER_DONORS = () => {
   const [data, setData] = useState({
@@ -31,6 +29,27 @@ const AMOUNT_BLOOD_SUPPLIED_NUMBER_DONORS = () => {
     fetchDataAsync();
   }, []);
 
+  const setOpacity = (array) => {
+    // 최댓값과 최솟값 찾기
+    const minValue = Math.min(...array);
+    const maxValue = Math.max(...array);
+
+    // 정규화된 값을 계산
+    return array.map((value) =>
+      ((value - minValue) / (maxValue - minValue)).toFixed(2)
+    );
+  };
+
+  const setZone = () => {
+    const opacitySet = setOpacity(data.donation_people.time);
+
+    const result = data.donation_people.year.map((e, i) => ({
+      value: i + 1,
+      color: `rgba(84, 173, 163, ${opacitySet[i]})`,
+    }));
+    return result;
+  };
+
   useEffect(() => {
     // 데이터가 로드된 후에 차트를 렌더링
     if (data.donation_people.year.length > 0) {
@@ -39,6 +58,11 @@ const AMOUNT_BLOOD_SUPPLIED_NUMBER_DONORS = () => {
   }, [data]);
 
   const renderChart = () => {
+    const ydata = data.donation_people.people.map((e, i) => ({
+      y: e,
+      times: data.donation_people.time[i],
+    }));
+
     Highcharts.setOptions({
       lang: {
         thousandsSep: ",",
@@ -110,8 +134,10 @@ const AMOUNT_BLOOD_SUPPLIED_NUMBER_DONORS = () => {
           marker: {
             enabled: false,
           },
+          zoneAxis: "x",
+          zones: setZone(),
           color: "#54ADA3",
-          data: data.donation_people.people,
+          data: ydata,
         },
         {
           name: "공급 혈액량(유닛)",
@@ -130,6 +156,7 @@ const AMOUNT_BLOOD_SUPPLIED_NUMBER_DONORS = () => {
 
   return (
     <div>
+      {/* 그래프를 렌더링할 컨테이너 */}
       <div id="chart-container"></div>
     </div>
   );
