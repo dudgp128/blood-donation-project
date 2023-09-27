@@ -1,27 +1,25 @@
 import Highcharts from "highcharts";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import fetchData from "./base";
 
-const AMOUNT_BLOOD_SUPPLIED_NUMBER_DONORS = () => {
-  const [data, setData] = useState({
-    blood_supply: { column: "", values: [] },
-    donation_people: { year: [], people: [], time: [] },
-  });
+const data = {
+  blood_supply: { year: [], values: [] },
+  donation_people: { year: [], people: [], time: [] },
+};
 
+const AMOUNT_BLOOD_SUPPLIED_NUMBER_DONORS = () => {
   const fetchDataAndUpdate = async (filename, key) => {
     try {
-      const result = await fetchData(filename);
-      setData((prevData) => ({ ...prevData, [key]: result }));
+      let result = await fetchData(filename, Object.keys(data[key]));
+      data[key] = result;
     } catch (error) {
       console.error(`데이터 가져오기 오류 (${key}):`, error);
     }
+    renderChart();
   };
 
   const fetchDataAsync = async () => {
-    await fetchDataAndUpdate(
-      "헌혈실적_대비_수혈용_혈액공급실적_추이_20230925213209.csv",
-      "blood_supply"
-    );
+    await fetchDataAndUpdate("혈액공급실적_20230927200132.csv", "blood_supply");
     await fetchDataAndUpdate("헌혈자_수_20230925212741.csv", "donation_people");
   };
 
@@ -49,13 +47,6 @@ const AMOUNT_BLOOD_SUPPLIED_NUMBER_DONORS = () => {
     }));
     return result;
   };
-
-  useEffect(() => {
-    // 데이터가 로드된 후에 차트를 렌더링
-    if (data.donation_people.year.length > 0) {
-      renderChart();
-    }
-  }, [data]);
 
   const setTooltip = ({ year, circle_color, column, value }) => {
     return `<p style="font-size:10px">${year}</p>
