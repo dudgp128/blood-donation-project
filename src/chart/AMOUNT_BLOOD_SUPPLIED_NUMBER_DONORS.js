@@ -31,95 +31,107 @@ const AMOUNT_BLOOD_SUPPLIED_NUMBER_DONORS = () => {
     fetchDataAsync();
   }, []);
 
-  Highcharts.setOptions({
-    lang: {
-      thousandsSep: ",",
-    },
-  });
-  const options = {
-    exporting: {
-      enabled: false,
-    },
-    credits: {
-      href: "https://www.bloodinfo.net/main.do",
-      text: " *데이터 출처: 대한적십자사 「혈액정보통계」 ",
-      style: {
-        color: "#707070",
+  useEffect(() => {
+    // 데이터가 로드된 후에 차트를 렌더링
+    if (data.donation_people.year.length > 0) {
+      renderChart();
+    }
+  }, [data]);
+
+  const renderChart = () => {
+    Highcharts.setOptions({
+      lang: {
+        thousandsSep: ",",
       },
-    },
-    title: {
-      text: "[ 공급 혈액량과 헌혈자수 추이 ]",
-      align: "center",
-      style: {
-        fontSize: "13px",
+    });
+
+    const options = {
+      exporting: {
+        enabled: false,
       },
-    },
-    xAxis: {
-      categories: data.donation_people.year,
-    },
-    plotOptions: {
-      series: {
-        lineWidth: 5,
+      credits: {
+        href: "https://www.bloodinfo.net/main.do",
+        text: " *데이터 출처: 대한적십자사 「혈액정보통계」 ",
+        style: {
+          color: "#707070",
+        },
       },
-    },
-    yAxis: [
-      {
-        labels: {
-          formatter: function () {
-            return this.value / 1000000 + "M";
+      title: {
+        text: "[ 공급 혈액량과 헌혈자수 추이 ]",
+        align: "center",
+        style: {
+          fontSize: "13px",
+        },
+      },
+      xAxis: {
+        categories: data.donation_people.year,
+      },
+      plotOptions: {
+        series: {
+          lineWidth: 5,
+        },
+      },
+
+      yAxis: [
+        {
+          labels: {
+            formatter: function () {
+              return this.value / 1000000 + "M";
+            },
+          },
+          title: {
+            text: "공급혈액량(유닛)",
           },
         },
-        title: {
-          text: "공급혈액량(유닛)",
-        },
-      },
-      {
-        labels: {
-          formatter: function () {
-            return this.value / 1000 + "K";
+        {
+          labels: {
+            formatter: function () {
+              return this.value / 1000 + "K";
+            },
           },
+          title: {
+            text: "헌혈자 수(명)",
+          },
+          opposite: true,
         },
-        title: {
-          text: "헌혈자 수(명)",
-        },
-        opposite: true,
+      ],
+      legend: {
+        y: -30,
+        x: -80,
+        layout: "vertical",
+        align: "right",
+        verticalAlign: "bottom",
+        floating: true,
       },
-    ],
-    legend: {
-      y: -30,
-      x: -80,
-      layout: "vertical",
-      align: "right",
-      verticalAlign: "bottom",
-      floating: true,
-    },
-    series: [
-      {
-        name: "총 헌혈자수(명)",
-        yAxis: 1,
-        marker: {
-          enabled: false,
+      series: [
+        {
+          name: "총 헌혈자수(명)",
+          yAxis: 1,
+          marker: {
+            enabled: false,
+          },
+          color: "#54ADA3",
+          data: data.donation_people.people,
         },
-        zoneAxis: "x",
-        color: "#54ADA3",
-        data: data.donation_people.people,
-      },
-      {
-        name: "공급 혈액량(유닛)",
-        yAxis: 0,
-        color: "#FF9DA7",
-        marker: {
-          enabled: false,
+        {
+          name: "공급 혈액량(유닛)",
+          yAxis: 0,
+          color: "#FF9DA7",
+          marker: {
+            enabled: false,
+          },
+          data: data.blood_supply.values,
         },
-        data: data.blood_supply.values,
-      },
-    ],
+      ],
+    };
+    // 그래프 생성
+    Highcharts.chart("chart-container", options);
   };
 
   return (
-    <Fragment>
-      <HighchartsReact highcharts={Highcharts} options={options} />
-    </Fragment>
+    <div>
+      <div id="chart-container"></div>
+    </div>
   );
 };
 
