@@ -149,6 +149,47 @@ const AMOUNT_BLOOD_SUPPLIED_NUMBER_DONORS = () => {
           data: data.blood_supply.values,
         },
       ],
+      tooltip: {
+        formatter: function () {
+          if (this.point.times === undefined) {
+            return (
+              '<p style="font-size:10px">' +
+              this.x +
+              "</p>" +
+              "<br/>" +
+              '<span style="color:' +
+              this.point.color +
+              '">\u25CF</span> ' +
+              this.series.name +
+              " : " +
+              "<b>" +
+              Highcharts.numberFormat(this.point.y, 0) +
+              "</b>"
+            );
+          } else {
+            let supply_day = this.point.times.toFixed(2);
+            return (
+              '<p style="font-size:10px">' +
+              this.x +
+              "</p>" +
+              "<br/>" +
+              this.series.name +
+              " : " +
+              "<b>" +
+              Highcharts.numberFormat(this.point.y, 0) +
+              "</b>" +
+              "<br/>" +
+              '<span style="color:' +
+              this.point.color +
+              '">\u25CF</span> ' +
+              "인당 헌혈 횟수 : " +
+              "<b>" +
+              supply_day +
+              " 회</b>"
+            );
+          }
+        },
+      },
     };
     // 그래프 생성
     Highcharts.chart("chart-container", options);
