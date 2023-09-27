@@ -11,24 +11,24 @@ const rowCSV = (csv) => {
   return { values };
 };
 
-const columnCSV = (csv) => {
-  const year = [];
-  const people = [];
-  const time = [];
+const columnCSV = (csv, keys) => {
+  const csv_Array = csv.map((row) => Array.from(Object.values(row)));
 
-  for (let i of csv) {
-    let [year_data, people_data, time_data] = Array.from(Object.values(i));
-    if (year_data && people_data && time_data) {
-      year.push(year_data);
-      people.push(people_data);
-      time.push(time_data);
-    }
-  }
+  // 같은 칼럼(index)의 요소들을 묶은 배열을 만듭니다.
+  const groupedArray = csv_Array[0].map((_, index) => {
+    return csv_Array.map((subArray) => subArray[index]);
+  });
 
-  return { year, people, time };
+  const obj = {};
+
+  keys.forEach((key, index) => {
+    obj[key] = groupedArray[index];
+  });
+
+  return obj;
 };
 
-const fetchData = async (filename) => {
+const fetchData = async (filename, keys) => {
   let csvData = [];
   let data = [];
   try {
@@ -43,7 +43,7 @@ const fetchData = async (filename) => {
         csvData = result.data;
         data = isRowCSV(Object.values(csvData[0]))
           ? rowCSV(csvData)
-          : columnCSV(csvData);
+          : columnCSV(csvData, keys);
       },
     });
   } catch (error) {
