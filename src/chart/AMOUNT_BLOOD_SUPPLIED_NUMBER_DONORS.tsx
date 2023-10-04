@@ -39,8 +39,7 @@ const AMOUNT_BLOOD_SUPPLIED_NUMBER_DONORS:React.FC = () => {
       parseFloat(((value - minValue) / (maxValue - minValue)).toFixed(3)))
   };
 
-  const setZone = () :Result=> {
-    
+  const setZone = () :Result=> { // ZONE 설정하기
     const opacitySet:number[] = setOpacity(data.donation_people.time);
     return opacitySet.map((e :number, i:number) => 
     ({
@@ -49,6 +48,7 @@ const AMOUNT_BLOOD_SUPPLIED_NUMBER_DONORS:React.FC = () => {
     }));
   };
 
+ // tooltip html 포멧
   const setTooltip = ({ year, circle_color, column, value }:Tooltip) :string => {
     return `<p style="font-size:10px">${year}</p>
      <br/>

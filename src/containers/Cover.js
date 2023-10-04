@@ -63,7 +63,6 @@ const Cover = () => {
             src="./img_src/blood_month_mark.svg"
             alt="월별 혈액 수급량 마크"
           />
-          <span className="copyright">NJ INTERACTIVE PROJECT</span>
         </div>
       </div>
       <img src="./img_src/scroll_mark.png" alt="scroll" />

@@ -66,6 +66,7 @@ const ChartContainer = () => {
             혈액이 필요한 환자를 살리는 꼭 필요한 헌혈, 얼마나 많이 참여할까?
           </b>
         </div>
+        {/* 차트 영역 */}
         <AMOUNT_BLOOD_SUPPLIED_NUMBER_DONORS />
         <div className="chart_explain">
           <p>Chart summary</p>
