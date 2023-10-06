@@ -1,23 +1,25 @@
 import Highcharts, { SeriesOptionsType } from "highcharts";
-import React, {  useEffect } from "react";
+import HighchartsReact from "highcharts-react-official";
+import React, {  useEffect, useState, Fragment } from "react";
 import fetchData from "./base";
 import { Data, Result, Tooltip } from "../model/chart";
 
-let data: Data = {
-  blood_supply: { year: [], values: [] },
-  donation_people: { year: [], people: [], time: [] },
-};
-
 const AMOUNT_BLOOD_SUPPLIED_NUMBER_DONORS:React.FC = () => {
+  const [data, setData] = useState<Data>({
+    blood_supply: { year: [], values: [] },
+    donation_people: { year: [], people: [], time: [] },
+  });
 
-  const fetchDataAndUpdate = async (filename:string, key:keyof Data) : Promise<void>=>{
+  const fetchDataAndUpdate = async (filename: string, key: keyof Data): Promise<void> => {
     try {
-      let result :any = await fetchData(filename, Object.keys(data[key]));
-      data[key] = result;
+      let result: any = await fetchData(filename, Object.keys(data[key]));
+      setData((prevData) => ({
+        ...prevData,
+        [key]: result,
+      }));
     } catch (error) {
       console.error(`데이터 가져오기 오류 (${key}):`, error);
     }
-    renderChart();
   };
 
   const fetchDataAsync = async ():Promise<void> => {
@@ -27,6 +29,7 @@ const AMOUNT_BLOOD_SUPPLIED_NUMBER_DONORS:React.FC = () => {
 
   useEffect(() => {
     fetchDataAsync();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const setOpacity = (array:number[]) :number[] => { 
@@ -55,141 +58,143 @@ const AMOUNT_BLOOD_SUPPLIED_NUMBER_DONORS:React.FC = () => {
       <span style="color:${circle_color}">\u25CF</span> ${column} : <b>${value}</b>`;
   };
 
-  const renderChart = () => {
-    interface CustomPointOptionsObject extends Highcharts.PointOptionsObject {
-      times: number;
-    }
-    
-    const ydata: CustomPointOptionsObject[] = data.donation_people.people.map((e, i) => ({
-      y: e,
-      times: data.donation_people.time[i],
-    }));
+  interface CustomPointOptionsObject extends Highcharts.PointOptionsObject {
+    times: number;
+  }
+  
+  const ydata: CustomPointOptionsObject[] = data.donation_people.people.map((e, i) => ({
+    y: e,
+    times: data.donation_people.time[i],
+  }));
 
-    Highcharts.setOptions({
-      lang: {
-        thousandsSep: ",",
-      },
-    });
+  Highcharts.setOptions({
+    lang: {
+      thousandsSep: ",",
+    },
+  });
 
-    const series:SeriesOptionsType[]= [
-      {
-        type:'line',
-        name: "총 헌혈자수(명)",
-        yAxis: 1,
-        color: "#54ADA3",
-        marker: {
-          enabled: false,
-        },
-        zoneAxis: "x",
-        zones: setZone(),
-        data: ydata,
-      },
-      {
-        type:'line',
-        name: "공급 혈액량(유닛)",
-        yAxis: 0,
-        color: "#FF9DA7",
-        marker: {
-          enabled: false,
-        },
-        data: data.blood_supply.values,
-      },
-    ]
-
-    const options:Highcharts.Options = {
-      exporting: {
+  const series:SeriesOptionsType[]= [
+    {
+      type:'line',
+      name: "총 헌혈자수(명)",
+      yAxis: 1,
+      color: "#54ADA3",
+      marker: {
         enabled: false,
       },
-      credits: {
-        href: "https://www.bloodinfo.net/main.do",
-        text: " *데이터 출처: 대한적십자사 「혈액정보통계」 ",
-        style: {
-          color: "#707070",
-        },
+      zoneAxis: "x",
+      zones: setZone(),
+      data: ydata,
+    },
+    {
+      type:'line',
+      name: "공급 혈액량(유닛)",
+      yAxis: 0,
+      color: "#FF9DA7",
+      marker: {
+        enabled: false,
       },
-      title: {
-        text: "[ 공급 혈액량과 헌혈자수 추이 ]",
-        align: "center",
-        style: {
-          fontSize: "13px",
-        },
+      data: data.blood_supply.values,
+    },
+  ]
+
+  const options:Highcharts.Options = {
+    exporting: {
+      enabled: false,
+    },
+    credits: {
+      href: "https://www.bloodinfo.net/main.do",
+      text: " *데이터 출처: 대한적십자사 「혈액정보통계」 ",
+      style: {
+        color: "#707070",
       },
-      xAxis: {
-        categories: Array.from(data.donation_people.year, number => String(number)),
+    },
+    title: {
+      text: "[ 공급 혈액량과 헌혈자수 추이 ]",
+      align: "center",
+      style: {
+        fontSize: "13px",
       },
-      plotOptions: {
-        series: {
-          lineWidth: 5,
-        },
+    },
+    xAxis: {
+      categories: Array.from(data.donation_people.year, number => String(number)),
+    },
+    plotOptions: {
+      series: {
+        lineWidth: 5,
       },
-      yAxis: [
-        {
-          labels: {
-            formatter: function (){
-              return this.value as number/ 1000000 + "M";
-            },
+    },
+    yAxis: [
+      {
+        labels: {
+          formatter: function (){
+            return this.value as number/ 1000000 + "M";
           },
-          title: {
-            text: "공급혈액량(유닛)",
-          },
         },
-        {
-          labels: {
-            formatter: function () {
-              return this.value as number / 1000 + "K";
-            },
-          },
-          title: {
-            text: "헌혈자 수(명)",
-          },
-          opposite: true,
+        title: {
+          text: "공급혈액량(유닛)",
         },
-      ],
-      legend: {
-        y: -30,
-        x: -80,
-        layout: "vertical",
-        align: "right",
-        verticalAlign: "bottom",
-        floating: true,
       },
-      series:series,
-      tooltip:{
-        formatter: function (this: Highcharts.TooltipFormatterContextObject) {
-          if(this.series.name==='공급 혈액량(유닛)'){
-            return setTooltip({
-              year: this.x as number,
-              circle_color: this.point.color as string,
-              column: this.series.name,
-              value: Highcharts.numberFormat(this.point.y as number, 0),
-            });
-          }
-          else{
-            let time=(this.point.options as CustomPointOptionsObject).times;
-            return setTooltip({
-              year: this.x as number,
-              circle_color: this.point.color as string,
-              column: "인당 헌혈 횟수",
-              value: `${time}회`
-            }).concat(
-              `<br/> ${this.series.name} : <b> ${Highcharts.numberFormat(
-                this.point.y as number,
-                0
-              )}`
-            )
-          }
+      {
+        labels: {
+          formatter: function () {
+            return this.value as number / 1000 + "K";
+          },
+        },
+        title: {
+          text: "헌혈자 수(명)",
+        },
+        opposite: true,
+      },
+    ],
+    legend: {
+      y: -30,
+      x: -80,
+      layout: "vertical",
+      align: "right",
+      verticalAlign: "bottom",
+      floating: true,
+    },
+    series:series,
+    tooltip:{
+      formatter: function (this: Highcharts.TooltipFormatterContextObject) {
+        if(this.series.name==='공급 혈액량(유닛)'){
+          return setTooltip({
+            year: this.x as number,
+            circle_color: this.point.color as string,
+            column: this.series.name,
+            value: Highcharts.numberFormat(this.point.y as number, 0),
+          });
+        }
+        else{
+          let time=(this.point.options as CustomPointOptionsObject).times;
+          return setTooltip({
+            year: this.x as number,
+            circle_color: this.point.color as string,
+            column: "인당 헌혈 횟수",
+            value: `${time}회`
+          }).concat(
+            `<br/> ${this.series.name} : <b> ${Highcharts.numberFormat(
+              this.point.y as number,
+              0
+            )}`
+          )
         }
       }
-    };
-    // 그래프 생성
-    let chart_1=Highcharts.chart("chart-container", options);
+    }
   };
 
   return (
-    <div>
-      {/* 그래프를 렌더링할 컨테이너 */}
-      <div id="chart-container"></div>
-    </div>
+    <Fragment>
+      {options && (
+        <>
+          <HighchartsReact
+            highcharts={Highcharts}
+            options={options}
+          />
+        </>
+      )}
+    </Fragment>
   );
 };
 
