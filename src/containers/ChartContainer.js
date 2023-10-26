@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import AMOUNT_BLOOD_SUPPLIED_NUMBER_DONORS from "../chart/AMOUNT_BLOOD_SUPPLIED_NUMBER_DONORS";
+import AMOUNT_BLOOD_SUPPLIED_NUMBER_DONORS from "../chart/AMOUNT_BLOOD_SUPPLIED_NUMBER_DONORS/chart";
 import Title from "../components/Title";
 import ChartExplain from "../components/ChartExplain";
 

@@ -1,8 +1,8 @@
 import Highcharts, { SeriesOptionsType } from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import React, {  useEffect, useState, Fragment } from "react";
-import fetchData from "./base";
-import { Data, Result, Tooltip } from "../model/chart";
+import fetchData from "../base";
+import { Data, Result, Tooltip } from "../../model/chart";
 
 const AMOUNT_BLOOD_SUPPLIED_NUMBER_DONORS:React.FC = () => {
   const [data, setData] = useState<Data>({
