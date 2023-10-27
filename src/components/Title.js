@@ -1,8 +1,4 @@
 import styled from "styled-components";
-import {
-  titleContent,
-  titleExplain,
-} from "../chart/BLOOD_SUPPLIED_NUMBER_DONORS/TitleContent";
 
 const TitleWrapper = styled.div`
   & > div.title {
@@ -18,12 +14,12 @@ const TitleWrapper = styled.div`
   }
 `;
 
-const Title = () => {
+const Title = ({ titleContent, titleExplain }) => {
   return (
     <TitleWrapper>
       <div className="title">
         <img src="./img_src/패스 79.png" alt="" />
-        <h1> {titleContent} </h1>
+        <h1>{titleContent}</h1>
       </div>
       <div className="title_explain">{titleExplain}</div>
     </TitleWrapper>

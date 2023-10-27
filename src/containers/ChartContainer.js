@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Title from "../components/Title";
 import Explain from "../components/Explain";
 import Chart from "../chart/BLOOD_SUPPLIED_NUMBER_DONORS/Chart";
+import { useState, useEffect } from "react";
 
 const Content = styled.div`
   background: #ffffff 0% 0% no-repeat padding-box;
@@ -20,12 +21,29 @@ const Content = styled.div`
     gap: 60px;
   }
 `;
+const loadContent = (category) => {
+  return import(`../chart/${category}/TitleContent`).then((module) => ({
+    titleContent: module.titleContent,
+    titleExplain: module.titleExplain,
+  }));
+};
 
-const ChartContainer = () => {
+const ChartContainer = ({ category }) => {
+  const [titles, setTitles] = useState({ titleContent: "", titleExplain: "" });
+
+  useEffect(() => {
+    loadContent(category).then((loadedTitles) => {
+      setTitles(loadedTitles);
+    });
+  }, [category]);
+
   return (
     <Content>
       <div>
-        <Title />
+        <Title
+          titleContent={titles.titleContent}
+          titleExplain={titles.titleExplain}
+        />
         <Chart />
         <Explain />
       </div>

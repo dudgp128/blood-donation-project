@@ -19,7 +19,7 @@ const App:React.FC=()=> {
       <Header />
       <Contents>
         <Cover />
-        <ChartContainer />
+        <ChartContainer category={'BLOOD_SUPPLIED_NUMBER_DONORS'}/>
       </Contents>
     </div>
   );
