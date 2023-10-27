@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import AMOUNT_BLOOD_SUPPLIED_NUMBER_DONORS from "../chart/AMOUNT_BLOOD_SUPPLIED_NUMBER_DONORS/chart";
 import Title from "../components/Title";
-import ChartExplain from "../components/ChartExplain";
+import Explain from "../components/Explain";
+import Chart from "../chart/BLOOD_SUPPLIED_NUMBER_DONORS/Chart";
 
 const Content = styled.div`
   background: #ffffff 0% 0% no-repeat padding-box;
@@ -26,8 +26,8 @@ const ChartContainer = () => {
     <Content>
       <div>
         <Title />
-        <AMOUNT_BLOOD_SUPPLIED_NUMBER_DONORS />
-        <ChartExplain />
+        <Chart />
+        <Explain />
       </div>
     </Content>
   );

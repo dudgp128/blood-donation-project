@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { ChartExplainContent } from "../chart/AMOUNT_BLOOD_SUPPLIED_NUMBER_DONORS/ChartExplainContent";
+import { ExplainContent } from "../chart/BLOOD_SUPPLIED_NUMBER_DONORS/ExplainContent";
 const ChartExplainWrapper = styled.div`
   white-space: pre;
   line-height: 1.5;
@@ -19,13 +19,13 @@ const ChartExplainWrapper = styled.div`
   }
 `;
 
-const ChartExplain = () => {
+const Explain = () => {
   return (
     <ChartExplainWrapper>
       <p>Chart summary</p>
-      {ChartExplainContent}
+      {ExplainContent}
     </ChartExplainWrapper>
   );
 };
 
-export default ChartExplain;
+export default Explain;

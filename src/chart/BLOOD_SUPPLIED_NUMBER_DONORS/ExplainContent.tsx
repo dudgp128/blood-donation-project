@@ -1,4 +1,4 @@
-const ChartExplainContent :JSX.Element= (
+const ExplainContent :JSX.Element= (
     <>
           채혈된 혈액은 검사 후 의료기관으로 공급되며 혈액의 단위는 유닛(unit,
       400cc)으로 1팩에 해당하는 양이다.
@@ -23,4 +23,4 @@ const ChartExplainContent :JSX.Element= (
       </>
 )
 
-export {ChartExplainContent}
+export {ExplainContent}

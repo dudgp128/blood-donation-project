@@ -4,7 +4,7 @@ import React, {  useEffect, useState, Fragment } from "react";
 import fetchData from "../base";
 import { Data, Result, Tooltip } from "../../model/chart";
 
-const AMOUNT_BLOOD_SUPPLIED_NUMBER_DONORS:React.FC = () => {
+const Chart:React.FC = () => {
   const [data, setData] = useState<Data>({
     blood_supply: { year: [], values: [] },
     donation_people: { year: [], people: [], time: [] },
@@ -198,4 +198,4 @@ const AMOUNT_BLOOD_SUPPLIED_NUMBER_DONORS:React.FC = () => {
   );
 };
 
-export default AMOUNT_BLOOD_SUPPLIED_NUMBER_DONORS;
+export default Chart;
