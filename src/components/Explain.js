@@ -1,9 +1,9 @@
-import React from "react";
 import styled from "styled-components";
 import { ExplainContent } from "../chart/BLOOD_SUPPLIED_NUMBER_DONORS/ExplainContent";
 const ChartExplainWrapper = styled.div`
-  white-space: pre;
-  line-height: 1.5;
+  width: 512px;
+  line-height: 2;
+  word-break: keep-all;
   margin-left: auto;
   margin-right: auto;
   border-width: 0px 0px 0px 5px;
@@ -16,6 +16,10 @@ const ChartExplainWrapper = styled.div`
 
   & > p {
     color: #bfbfbf;
+  }
+
+  & > pre {
+    margin: 0;
   }
 `;
 
