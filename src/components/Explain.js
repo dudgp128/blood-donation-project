@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { ExplainContent } from "../chart/BLOOD_SUPPLIED_NUMBER_DONORS/ExplainContent";
 const ChartExplainWrapper = styled.div`
-  width: 512px;
+  width: 450px;
   line-height: 2;
   word-break: keep-all;
   margin-left: auto;
@@ -10,7 +10,7 @@ const ChartExplainWrapper = styled.div`
   border-style: solid;
   border-color: #fa7391;
   padding-left: 18px;
-  text-align: left;
+  text-align: justify;
   color: #4b4b4b;
   font-size: 14px;
 
