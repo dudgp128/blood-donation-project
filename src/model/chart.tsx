@@ -15,3 +15,8 @@ export type Tooltip={
     column:string,
     value:string | object
 }
+
+export type Titles={
+    titleContent:string;
+    titleExplain:string;
+}

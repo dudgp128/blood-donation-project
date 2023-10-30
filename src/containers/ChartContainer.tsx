@@ -3,6 +3,7 @@ import Title from "../components/Title";
 import Explain from "../components/Explain";
 import Chart from "../chart/BLOOD_SUPPLIED_NUMBER_DONORS/Chart";
 import { useState, useEffect } from "react";
+import { Titles } from "../model/chart"; 
 
 const Content = styled.div`
   background: #ffffff 0% 0% no-repeat padding-box;
@@ -21,15 +22,19 @@ const Content = styled.div`
     gap: 60px;
   }
 `;
-const loadContent = (category) => {
+const loadContent = (category:string):Promise<Titles> => {
   return import(`../chart/${category}/TitleContent`).then((module) => ({
     titleContent: module.titleContent,
     titleExplain: module.titleExplain,
   }));
 };
 
-const ChartContainer = ({ category }) => {
-  const [titles, setTitles] = useState({ titleContent: "", titleExplain: "" });
+interface ChartContainerProps{
+  category:string
+}
+
+const ChartContainer:React.FC<ChartContainerProps> = ({ category }:ChartContainerProps) => {
+  const [titles, setTitles] = useState<Titles>({ titleContent: "", titleExplain: "" });
 
   useEffect(() => {
     loadContent(category).then((loadedTitles) => {
