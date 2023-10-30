@@ -11,6 +11,7 @@ const Contents = styled.div`
   flex-direction: column;
   position: relative;
   top: 100px;
+  gap:100px;
 `;
 
 const App:React.FC=()=> {

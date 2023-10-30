@@ -12,11 +12,10 @@ const Content = styled.div`
   width: 900px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 50px;
 
   & > div {
     position: relative;
-    top: 60px;
+    padding: 60px 0px;
     display: flex;
     flex-direction: column;
     gap: 60px;
