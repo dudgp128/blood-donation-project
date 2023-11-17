@@ -1,16 +1,5 @@
 import Papa from "papaparse";
 
-const isRowCSV = (valueArray) => {
-  return valueArray[0] === valueArray[1];
-};
-
-const rowCSV = (csv) => {
-  let values = Object.values(csv[1]).filter(
-    (value) => typeof value === "number"
-  );
-  return { values };
-};
-
 const columnCSV = (csv, keys) => {
   const csv_Array = csv.map((row) => Array.from(Object.values(row)));
 
@@ -24,7 +13,6 @@ const columnCSV = (csv, keys) => {
   keys.forEach((key, index) => {
     obj[key] = groupedArray[index];
   });
-
   return obj;
 };
 
@@ -41,9 +29,7 @@ const fetchData = async (filename, keys) => {
       dynamicTyping: true,
       complete: (result) => {
         csvData = result.data;
-        data = isRowCSV(Object.values(csvData[0]))
-          ? rowCSV(csvData)
-          : columnCSV(csvData, keys);
+        data = columnCSV(csvData, keys);
       },
     });
   } catch (error) {
