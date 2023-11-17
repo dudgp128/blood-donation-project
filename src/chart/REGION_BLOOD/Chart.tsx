@@ -39,7 +39,7 @@ const MyMapComponent: React.FC = () => {
   }, []);
 
 
-  const citycode: MapKorea = {
+  const cityCode: MapKorea = {
     합계: 'kr-4194',
     서울: 'kr-so',
     경기: 'kr-kg',
@@ -59,7 +59,7 @@ const MyMapComponent: React.FC = () => {
   const finaldData = (): [string, number][] => {
     const { region, percent } = dataSet.data;
 
-    const code_region = region.map((e) => citycode[e]);
+    const code_region = region.map((e) => cityCode[e]);
 
     if (code_region.length !== percent.length) {
       throw new Error('Arrays must have the same length');
@@ -75,7 +75,9 @@ const MyMapComponent: React.FC = () => {
       data: finaldData(),
       dataLabels: {
         enabled: true,
-        format: '{point.hc-key}' // this.properties.hc-key로 수정
+        formatter:function (){
+          return Object.keys(cityCode).find(key => cityCode[key] === (this.point as any)['hc-key']);
+        } 
       }
     }
   ]
