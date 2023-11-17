@@ -40,7 +40,6 @@ const MyMapComponent: React.FC = () => {
 
   useEffect(() => {
     fetchDataAsync();
-    finaldData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -69,23 +68,27 @@ const MyMapComponent: React.FC = () => {
     });
   }
 
-  const finaldData = (): [string, number][] => {
-    const { region, percent } = dataSet.data;
+  const extractData = (key:string): [string, number][] => {
+    const { region } = dataSet.data;
+    const column = dataSet.data[key]
 
     const code_region = findKeyByValue(region);
 
-    if (code_region.length !== percent.length) {
+    if (!column) {
+      throw new Error(`Invalid key: ${key}`);
+    }
+    
+    if (code_region.length !== column.length) {
       throw new Error('Arrays must have the same length');
     }
 
-    return code_region.map((value: any, index: number) => [value, percent[index]]);
+    return code_region.map((value: any, index: number) => [value, column[index]]);
   }
 
   const series: SeriesOptionsType[] = [
     {
       type: 'map', // 필수값?
       mapData: mapDataAsia,
-      data: finaldData(),
       dataLabels: {
         enabled: true,
         formatter: function () {
@@ -95,7 +98,7 @@ const MyMapComponent: React.FC = () => {
     }
   ]
 
-  const options: Highcharts.Options = {
+  const percentOptions: Highcharts.Options = {
     title: {
       text: ""
     },
@@ -108,7 +111,6 @@ const MyMapComponent: React.FC = () => {
     },
     colorAxis: {
       min: 0,
-      max: 9
     },
 
     mapNavigation: {
@@ -117,7 +119,7 @@ const MyMapComponent: React.FC = () => {
         verticalAlign: 'bottom'
       }
     },
-    series: series,
+    series: [Object.assign({}, series[0], { data: extractData('percent') })],
     tooltip: {
       formatter: function (this: Highcharts.TooltipFormatterContextObject) {
         return `<p style="font-size:10px">${cityCode[(this.point as any)['hc-key']]}</p>
@@ -127,15 +129,52 @@ const MyMapComponent: React.FC = () => {
     }
   };
 
+  Highcharts.setOptions({
+    lang: {
+      thousandsSep: ",",
+    },
+  });
+
+  const countOptions: Highcharts.Options = {
+    title: {
+      text: ""
+    },
+    credits: {
+      href: "https://www.bloodinfo.net/main.do",
+      text: " *데이터 출처: 대한적십자사 「혈액정보통계」 ",
+      style: {
+        color: "#707070",
+      },
+    },
+    colorAxis: {
+      min: 0,
+    },
+
+    mapNavigation: {
+      enabled: true,
+      buttonOptions: {
+        verticalAlign: 'bottom'
+      }
+    },
+    series: [Object.assign({}, series[0], { data: extractData('count') })],
+    tooltip: {
+      formatter: function (this: Highcharts.TooltipFormatterContextObject) {
+        return `<p style="font-size:10px">${cityCode[(this.point as any)['hc-key']]}</p>
+        <br/>
+        <span style="color:${this.point.color}">\u25CF</span> 헌혈실적 : ${this.point.value} `
+      }
+    }
+  };
+
   return (
     <ChartContainer>
         <HighchartsReact
-          options={options}
+          options={percentOptions}
           constructorType={"mapChart"}
           highcharts={Highcharts}
         />
         <HighchartsReact
-          options={options}
+          options={countOptions}
           constructorType={"mapChart"}
           highcharts={Highcharts}
         />

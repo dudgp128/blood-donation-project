@@ -22,7 +22,6 @@ export type Titles = {
 }
 
 export interface MapKorea {
-    'kr-4194': string;
     'kr-so': string;
     'kr-kg': string;
     'kr-gb': string;
@@ -42,5 +41,8 @@ export interface MapKorea {
 
 
 export interface Region_Data {
-    data: { year: number[], region: string[], count: number[], percent: number[] };
+    data: {
+        year: number[]; region: string[]; count: number[]; percent: number[];
+        [key: string]: number[] | string[];
+    };
 }
