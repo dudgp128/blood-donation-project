@@ -112,6 +112,13 @@ const MyMapComponent: React.FC = () => {
       }
     },
     series: series,
+    tooltip: {
+      formatter: function (this: Highcharts.TooltipFormatterContextObject) {
+        return `<p style="font-size:10px">${cityCode[(this.point as any)['hc-key']]}</p>
+        <br/>
+        <span style="color:${this.point.color}">\u25CF</span> 헌혈률 : ${this.point.value} %`
+      }
+    }
   };
 
   return (
