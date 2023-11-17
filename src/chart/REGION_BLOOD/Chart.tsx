@@ -4,6 +4,12 @@ import mapDataAsia from "./mapSouthKorea";
 import { Region_Data, MapKorea } from "../../model/chart";
 import { useState, useEffect } from "react";
 import fetchData from "../base";
+import styled from "styled-components";
+
+const ChartContainer = styled.div`
+  display: flex;
+  position: relative;
+`;
 
 
 // Load Highcharts modules
@@ -122,13 +128,18 @@ const MyMapComponent: React.FC = () => {
   };
 
   return (
-    <div>
-      <HighchartsReact
-        options={options}
-        constructorType={"mapChart"}
-        highcharts={Highcharts}
-      />
-    </div>
+    <ChartContainer>
+        <HighchartsReact
+          options={options}
+          constructorType={"mapChart"}
+          highcharts={Highcharts}
+        />
+        <HighchartsReact
+          options={options}
+          constructorType={"mapChart"}
+          highcharts={Highcharts}
+        />
+    </ChartContainer>
   );
 
 }
