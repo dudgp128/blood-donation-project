@@ -40,32 +40,39 @@ const MyMapComponent: React.FC = () => {
 
 
   const cityCode: MapKorea = {
-    합계: 'kr-4194',
-    서울: 'kr-so',
-    경기: 'kr-kg',
-    충북: 'kr-gb',
-    대전·세종·충남: 'kr-gn',
-    전북: 'kr-cb',
-    경남: 'kr-kn',
-    광주·전남: 'kr-2685',
-    부산: 'kr-pu',
-    대구·경북: 'kr-2688',
-    울산: 'kr-ul',
-    인천: 'kr-in',
-    강원: 'kr-kw',
-    제주: 'kr-cj',
+    'kr-4194': '합계',
+    'kr-so': '서울',
+    'kr-kg': '경기',
+    'kr-gb': '충북',
+    'kr-gn': '대전·세종·충남',
+    'kr-cb': '전북',
+    'kr-kn': '경남',
+    'kr-2685': '광주·전남',
+    'kr-pu': '부산',
+    'kr-2688': '대구·경북',
+    'kr-ul': '울산',
+    'kr-in': '인천',
+    'kr-kw': '강원',
+    'kr-cj': '제주',
+  }
+
+  const findKeyByValue = (valueSet: any) => {
+    return valueSet.map((value: any) => {
+      const foundKey = Object.keys(cityCode).find(key => cityCode[key] === value);
+      return foundKey || ''; // Return an empty string if not found (you may handle this case differently)
+    });
   }
 
   const finaldData = (): [string, number][] => {
     const { region, percent } = dataSet.data;
 
-    const code_region = region.map((e) => cityCode[e]);
+    const code_region = findKeyByValue(region);
 
     if (code_region.length !== percent.length) {
       throw new Error('Arrays must have the same length');
     }
 
-    return code_region.map((value, index) => [value, percent[index]]);
+    return code_region.map((value: any, index: number) => [value, percent[index]]);
   }
 
   const series: SeriesOptionsType[] = [
@@ -75,9 +82,9 @@ const MyMapComponent: React.FC = () => {
       data: finaldData(),
       dataLabels: {
         enabled: true,
-        formatter:function (){
-          return Object.keys(cityCode).find(key => cityCode[key] === (this.point as any)['hc-key']);
-        } 
+        formatter: function () {
+          return cityCode[(this.point as any)['hc-key']]
+        }
       }
     }
   ]
@@ -104,7 +111,7 @@ const MyMapComponent: React.FC = () => {
         verticalAlign: 'bottom'
       }
     },
-    series: series
+    series: series,
   };
 
   return (

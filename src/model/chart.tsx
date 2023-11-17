@@ -22,20 +22,20 @@ export type Titles = {
 }
 
 export interface MapKorea {
-    합계: string;
-    서울: string;
-    경기: string;
-    충북: string;
-    대전·세종·충남: string;
-    전북: string;
-    경남: string;
-    광주·전남: string;
-    부산: string;
-    대구·경북: string;
-    울산: string;
-    인천: string;
-    강원: string;
-    제주: string;
+    'kr-4194': string;
+    'kr-so': string;
+    'kr-kg': string;
+    'kr-gb': string;
+    'kr-gn': string;
+    'kr-cb': string;
+    'kr-kn': string;
+    'kr-2685': string;
+    'kr-pu': string;
+    'kr-2688': string;
+    'kr-ul': string;
+    'kr-in': string;
+    'kr-kw': string;
+    'kr-cj': string;
 
     [key: string]: string; // Index signature
 }
