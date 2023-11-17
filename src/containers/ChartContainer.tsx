@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Title from "../components/Title";
 import Explain from "../components/Explain";
 import Chart from "../chart/BLOOD_SUPPLIED_NUMBER_DONORS/Chart";
+import MyMapComponent from "../chart/REGION_BLOOD/Chart";
 import { useState, useEffect } from "react";
 import { Titles } from "../model/chart"; 
 
@@ -49,7 +50,7 @@ const ChartContainer:React.FC<ChartContainerProps> = ({ category }:ChartContaine
           titleContent={titles.titleContent}
           titleExplain={titles.titleExplain}
         />
-        <Chart />
+        {category==='BLOOD_SUPPLIED_NUMBER_DONORS'?<Chart />:<MyMapComponent/>}
         <Explain />
       </div>
     </Content>
