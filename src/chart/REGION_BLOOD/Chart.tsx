@@ -187,9 +187,9 @@ const MyMapComponent: React.FC = () => {
           cityCode[(this.point as any)["hc-key"]]
         }</p>
         <br/>
-        <span style="color:${
-          this.point.color
-        }">\u25CF</span> 헌혈실적 : ${value} `;
+        <span style="color:${this.point.color}">\u25CF</span> 헌혈실적 : ${value
+          ?.toString()
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")} `;
       },
     },
   };
