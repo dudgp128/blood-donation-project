@@ -48,7 +48,6 @@ const MyMapComponent: React.FC = () => {
   }, []);
 
   const cityCode: MapKorea = {
-    "kr-4194": "합계",
     "kr-so": "서울",
     "kr-kg": "경기",
     "kr-gb": "충북",
@@ -95,7 +94,7 @@ const MyMapComponent: React.FC = () => {
 
   const series: SeriesOptionsType[] = [
     {
-      type: "map", 
+      type: "map",
       mapData: mapDataAsia,
       dataLabels: {
         enabled: true,
@@ -141,12 +140,6 @@ const MyMapComponent: React.FC = () => {
       },
     },
   };
-
-  Highcharts.setOptions({
-    lang: {
-      thousandsSep: ",",
-    },
-  });
 
   const countOptions: Highcharts.Options = {
     title: {
