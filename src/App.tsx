@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Header from "./components/Header";
 import Cover from "./containers/Cover";
 import ChartContainer from "./containers/ChartContainer";
-import * as React from 'react';
 
 
 const Contents = styled.div`
@@ -21,8 +20,7 @@ const App:React.FC=()=> {
       <Contents>
         <Cover />
         <ChartContainer category={'BLOOD_SUPPLIED_NUMBER_DONORS'}/>
-        <ChartContainer category={'KOREA_MAP'}/>
-
+        <ChartContainer category={'REGION_BLOOD'}/>
       </Contents>
     </div>
   );
