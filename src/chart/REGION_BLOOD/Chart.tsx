@@ -117,7 +117,15 @@ const MyMapComponent: React.FC = () => {
       },
     },
     colorAxis: {
-      min: 0,
+      min: 1,
+      stops: [
+        [0.1, "rgba(153, 0, 65, 0.1)"],
+        [0.3, "rgba(153, 0, 65, 0.3)"],
+        [0.5, "rgba(153, 0, 65, 0.5)"],
+        [0.6, "rgba(153, 0, 65, 0.6)"],
+        [0.9, "rgba(153, 0, 65, 0.9)"],
+        [1, "rgba(153, 0, 65, 1)"],
+      ],
     },
 
     mapNavigation: {
@@ -153,7 +161,15 @@ const MyMapComponent: React.FC = () => {
       },
     },
     colorAxis: {
-      min: 0,
+      min: 40000,
+      stops: [
+        [0.1, "rgba(153, 0, 65, 0.1)"],
+        [0.3, "rgba(153, 0, 65, 0.3)"],
+        [0.5, "rgba(153, 0, 65, 0.5)"],
+        [0.6, "rgba(153, 0, 65, 0.6)"],
+        [0.9, "rgba(153, 0, 65, 0.9)"],
+        [1, "rgba(153, 0, 65, 1)"],
+      ],
     },
 
     mapNavigation: {
