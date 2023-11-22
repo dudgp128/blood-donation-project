@@ -1,58 +1,69 @@
 import Highcharts, { SeriesOptionsType } from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import React, {  useEffect, useState, Fragment } from "react";
+import React, { useEffect, useState, Fragment } from "react";
 import fetchData from "../base";
 import { Data, Result, Tooltip } from "../../model/chart";
+import { produce } from "immer";
 
-const Chart:React.FC = () => {
-  const [data, setData] = useState<Data>({
+const Chart: React.FC = () => {
+  const [dataSet, setDataSet] = useState<Data>({
     blood_supply: { year: [], values: [] },
     donation_people: { year: [], people: [], time: [] },
   });
 
-  const fetchDataAndUpdate = async (filename: string, key: keyof Data): Promise<void> => {
+  const fetchDataAndUpdate = async (
+    filename: string,
+    key: keyof Data
+  ): Promise<void> => {
     try {
-      let result: any = await fetchData(filename, Object.keys(data[key]));
-      setData((prevData) => ({
-        ...prevData,
-        [key]: result,
-      }));
+      let result: any = await fetchData(filename, Object.keys(dataSet[key]));
+      setDataSet(
+        produce((draft) => {
+          draft[key] = result;
+        })
+      );
     } catch (error) {
       console.error(`데이터 가져오기 오류 (${key}):`, error);
     }
   };
 
-  const fetchDataAsync = async ():Promise<void> => {
+  const fetchDataAsync = async (): Promise<void> => {
     await fetchDataAndUpdate("혈액공급실적_20230927200132.csv", "blood_supply");
     await fetchDataAndUpdate("헌혈자_수_20230925212741.csv", "donation_people");
   };
 
   useEffect(() => {
     fetchDataAsync();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const setOpacity = (array:number[]) :number[] => { 
+  const setOpacity = (array: number[]): number[] => {
     // 최댓값과 최솟값 찾기
-    const minValue:number = Math.floor(Math.min(...array)*10)/10; // 소숫점 첫째 자리 이후 버림
-    const maxValue:number = Math.max(...array);
+    const minValue: number = Math.floor(Math.min(...array) * 10) / 10; // 소숫점 첫째 자리 이후 버림
+    const maxValue: number = Math.max(...array);
 
     // 정규화된 값을 계산
-    return array.map((value:number) =>
-      parseFloat(((value - minValue) / (maxValue - minValue)).toFixed(3)))
+    return array.map((value: number) =>
+      parseFloat(((value - minValue) / (maxValue - minValue)).toFixed(3))
+    );
   };
 
-  const setZone = () :Result=> { // ZONE 설정하기
-    const opacitySet:number[] = setOpacity(data.donation_people.time);
-    return opacitySet.map((e :number, i:number) => 
-    ({
+  const setZone = (): Result => {
+    // ZONE 설정하기
+    const opacitySet: number[] = setOpacity(dataSet.donation_people.time);
+    return opacitySet.map((e: number, i: number) => ({
       value: i + 1,
       color: `rgba(86, 174, 164, ${e})`,
     }));
   };
 
- // tooltip html 포멧
-  const setTooltip = ({ year, circle_color, column, value }:Tooltip) :string => {
+  // tooltip html 포멧
+  const setTooltip = ({
+    year,
+    circle_color,
+    column,
+    value,
+  }: Tooltip): string => {
     return `<p style="font-size:10px">${year}</p>
      <br/>
       <span style="color:${circle_color}">\u25CF</span> ${column} : <b>${value}</b>`;
@@ -61,11 +72,13 @@ const Chart:React.FC = () => {
   interface CustomPointOptionsObject extends Highcharts.PointOptionsObject {
     times: number;
   }
-  
-  const ydata: CustomPointOptionsObject[] = data.donation_people.people.map((e, i) => ({
-    y: e,
-    times: data.donation_people.time[i],
-  }));
+
+  const ydata: CustomPointOptionsObject[] = dataSet.donation_people.people.map(
+    (e, i) => ({
+      y: e,
+      times: dataSet.donation_people.time[i],
+    })
+  );
 
   Highcharts.setOptions({
     lang: {
@@ -73,9 +86,9 @@ const Chart:React.FC = () => {
     },
   });
 
-  const series:SeriesOptionsType[]= [
+  const series: SeriesOptionsType[] = [
     {
-      type:'line',
+      type: "line",
       name: "총 헌혈자수(명)",
       yAxis: 1,
       color: "#54ADA3",
@@ -87,18 +100,18 @@ const Chart:React.FC = () => {
       data: ydata,
     },
     {
-      type:'line',
+      type: "line",
       name: "공급 혈액량(유닛)",
       yAxis: 0,
       color: "#FF9DA7",
       marker: {
         enabled: false,
       },
-      data: data.blood_supply.values,
+      data: dataSet.blood_supply.values,
     },
-  ]
+  ];
 
-  const options:Highcharts.Options = {
+  const options: Highcharts.Options = {
     exporting: {
       enabled: false,
     },
@@ -117,7 +130,9 @@ const Chart:React.FC = () => {
       },
     },
     xAxis: {
-      categories: Array.from(data.donation_people.year, number => String(number)),
+      categories: Array.from(dataSet.donation_people.year, (number) =>
+        String(number)
+      ),
     },
     plotOptions: {
       series: {
@@ -127,8 +142,8 @@ const Chart:React.FC = () => {
     yAxis: [
       {
         labels: {
-          formatter: function (){
-            return this.value as number/ 1000000 + "M";
+          formatter: function () {
+            return (this.value as number) / 1000000 + "M";
           },
         },
         title: {
@@ -138,7 +153,7 @@ const Chart:React.FC = () => {
       {
         labels: {
           formatter: function () {
-            return this.value as number / 1000 + "K";
+            return (this.value as number) / 1000 + "K";
           },
         },
         title: {
@@ -155,43 +170,39 @@ const Chart:React.FC = () => {
       verticalAlign: "bottom",
       floating: true,
     },
-    series:series,
-    tooltip:{
+    series: series,
+    tooltip: {
       formatter: function (this: Highcharts.TooltipFormatterContextObject) {
-        if(this.series.name==='공급 혈액량(유닛)'){
+        if (this.series.name === "공급 혈액량(유닛)") {
           return setTooltip({
             year: this.x as number,
             circle_color: this.point.color as string,
             column: this.series.name,
             value: Highcharts.numberFormat(this.point.y as number, 0),
           });
-        }
-        else{
-          let time=(this.point.options as CustomPointOptionsObject).times;
+        } else {
+          let time = (this.point.options as CustomPointOptionsObject).times;
           return setTooltip({
             year: this.x as number,
             circle_color: this.point.color as string,
             column: "인당 헌혈 횟수",
-            value: `${time}회`
+            value: `${time}회`,
           }).concat(
             `<br/> ${this.series.name} : <b> ${Highcharts.numberFormat(
               this.point.y as number,
               0
             )}`
-          )
+          );
         }
-      }
-    }
+      },
+    },
   };
 
   return (
     <Fragment>
       {options && (
         <>
-          <HighchartsReact
-            highcharts={Highcharts}
-            options={options}
-          />
+          <HighchartsReact highcharts={Highcharts} options={options} />
         </>
       )}
     </Fragment>
