@@ -21,6 +21,8 @@ const App:React.FC=()=> {
       <Contents>
         <Cover />
         <ChartContainer category={'BLOOD_SUPPLIED_NUMBER_DONORS'}/>
+        <ChartContainer category={'KOREA_MAP'}/>
+
       </Contents>
     </div>
   );
