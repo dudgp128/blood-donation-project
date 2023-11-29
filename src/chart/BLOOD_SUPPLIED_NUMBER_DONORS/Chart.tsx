@@ -179,4 +179,4 @@ const Chart: React.FC = () => {
   );
 };
 
-export default Chart;
+export default React.memo(Chart);

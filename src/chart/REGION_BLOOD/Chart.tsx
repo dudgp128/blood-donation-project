@@ -2,13 +2,8 @@ import Highcharts, { SeriesOptionsType } from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import mapDataAsia from "./mapSouthKorea";
 import { MapKorea } from "../../model/chart";
-import styled from "styled-components";
 import { useDataFetching } from "./useFetchData";
-
-const ChartContainer = styled.div`
-  display: flex;
-  position: relative;
-`;
+import React, { Fragment } from "react";
 
 require("highcharts/modules/map")(Highcharts);
 
@@ -118,13 +113,13 @@ const MyMapComponent: React.FC = () => {
   };
 
   return (
-    <ChartContainer>
+    <Fragment>
       <HighchartsReact
         options={percentOptions}
         constructorType={"mapChart"}
         highcharts={Highcharts}
       />
-    </ChartContainer>
+    </Fragment>
   );
 };
-export default MyMapComponent;
+export default React.memo(MyMapComponent);
