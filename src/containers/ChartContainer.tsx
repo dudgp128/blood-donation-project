@@ -36,10 +36,12 @@ const loadChart = async (category: string): Promise<React.FC<{}>> => {
 
 interface ChartContainerProps {
   category: string;
+  style: object;
 }
 
 const ChartContainer: React.FC<ChartContainerProps> = ({
   category,
+  style,
 }: ChartContainerProps) => {
   const [titles, setTitles] = useState<Titles>({
     titleContent: "",
