@@ -7,7 +7,7 @@ import React, { Fragment } from "react";
 
 require("highcharts/modules/map")(Highcharts);
 
-const MyMapComponent: React.FC = () => {
+const Chart: React.FC = () => {
   const { dataSet } = useDataFetching();
 
   const cityCode: MapKorea = {
@@ -122,4 +122,4 @@ const MyMapComponent: React.FC = () => {
     </Fragment>
   );
 };
-export default React.memo(MyMapComponent);
+export default React.memo(Chart);

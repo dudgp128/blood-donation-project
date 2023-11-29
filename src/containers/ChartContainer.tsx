@@ -1,8 +1,6 @@
 import styled from "styled-components";
 import Title from "../components/Title";
 import Explain from "../components/Explain";
-import Chart from "../chart/BLOOD_SUPPLIED_NUMBER_DONORS/Chart";
-import MyMapComponent from "../chart/REGION_BLOOD/Chart";
 import { useState, useEffect } from "react";
 import { Titles } from "../model/chart";
 
@@ -23,15 +21,17 @@ const Content = styled.div`
   }
 `;
 
-const loadContent = (category: string): Promise<Titles> => {
-  return import(`../chart/${category}/TitleContent`).then((module) => ({
+const loadContent = async (category: string): Promise<Titles> => {
+  const module = await import(`../chart/${category}/TitleContent`);
+  return {
     titleContent: module.titleContent,
     titleExplain: module.titleExplain,
-  }));
+  };
 };
 
-const loadChart = (category: string): Promise<React.FC<{}>> => {
-  return import(`../chart/${category}/Chart`).then((module) => module.default);
+const loadChart = async (category: string): Promise<React.FC<{}>> => {
+  const module = await import(`../chart/${category}/Chart`);
+  return module.default;
 };
 
 interface ChartContainerProps {
@@ -45,6 +45,7 @@ const ChartContainer: React.FC<ChartContainerProps> = ({
     titleContent: "",
     titleExplain: "",
   });
+
   const [Chart, setChart] = useState<React.FC<{}> | null>(() => null);
 
   useEffect(() => {
@@ -54,7 +55,7 @@ const ChartContainer: React.FC<ChartContainerProps> = ({
     loadChart(category).then((Chart) => {
       setChart(() => Chart);
     });
-  }, [category]);
+  }, [category, Chart]);
 
   return (
     <Content>
@@ -63,11 +64,7 @@ const ChartContainer: React.FC<ChartContainerProps> = ({
           titleContent={titles.titleContent}
           titleExplain={titles.titleExplain}
         />
-        {category === "BLOOD_SUPPLIED_NUMBER_DONORS" ? (
-          Chart && <Chart />
-        ) : (
-          <MyMapComponent />
-        )}
+        {Chart && <Chart />}
         <Explain />
       </div>
     </Content>
