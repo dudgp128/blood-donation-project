@@ -117,60 +117,10 @@ const MyMapComponent: React.FC = () => {
     },
   };
 
-  const countOptions: Highcharts.Options = {
-    title: {
-      text: "",
-    },
-    credits: {
-      href: "https://www.bloodinfo.net/main.do",
-      text: " *데이터 출처: 대한적십자사 「혈액정보통계」 ",
-      style: {
-        color: "#707070",
-      },
-    },
-    colorAxis: {
-      min: 40000,
-      stops: [
-        [0.1, "rgba(153, 0, 65, 0.1)"],
-        [0.3, "rgba(153, 0, 65, 0.3)"],
-        [0.5, "rgba(153, 0, 65, 0.5)"],
-        [0.6, "rgba(153, 0, 65, 0.6)"],
-        [0.9, "rgba(153, 0, 65, 0.9)"],
-        [1, "rgba(153, 0, 65, 1)"],
-      ],
-    },
-
-    mapNavigation: {
-      enabled: true,
-      buttonOptions: {
-        verticalAlign: "bottom",
-      },
-    },
-    series: [Object.assign({}, series[0], { data: extractData("count") })],
-    tooltip: {
-      formatter: function (this: Highcharts.TooltipFormatterContextObject) {
-        const { value } = this.point.options;
-
-        return `<p style="font-size:10px">${
-          cityCode[(this.point as any)["hc-key"]]
-        }</p>
-        <br/>
-        <span style="color:${this.point.color}">\u25CF</span> 헌혈실적 : ${value
-          ?.toString()
-          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")} `;
-      },
-    },
-  };
-
   return (
     <ChartContainer>
       <HighchartsReact
         options={percentOptions}
-        constructorType={"mapChart"}
-        highcharts={Highcharts}
-      />
-      <HighchartsReact
-        options={countOptions}
         constructorType={"mapChart"}
         highcharts={Highcharts}
       />
