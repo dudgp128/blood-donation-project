@@ -48,6 +48,7 @@
   },
   "devDependencies": {
     "@types/react": "^18.2.38",
+    "@types/react-virtualized": "^9.21.28",
     "@types/styled-components": "^5.1.32",
     "papaparse": "^5.4.1"
   }
