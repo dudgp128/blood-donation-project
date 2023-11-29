@@ -1,51 +1,19 @@
 import Highcharts, { SeriesOptionsType } from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import mapDataAsia from "./mapSouthKorea";
-import { Region_Data, MapKorea } from "../../model/chart";
-import { useState, useEffect } from "react";
-import fetchData from "../base";
+import { MapKorea } from "../../model/chart";
 import styled from "styled-components";
+import { useDataFetching } from "./useFetchData";
 
 const ChartContainer = styled.div`
   display: flex;
   position: relative;
 `;
 
-// Load Highcharts modules
 require("highcharts/modules/map")(Highcharts);
 
-// Render app with demo chart
 const MyMapComponent: React.FC = () => {
-  const [dataSet, setDataSet] = useState<Region_Data>({
-    data: { year: [], region: [], count: [], percent: [] },
-  });
-
-  const fetchDataAndUpdate = async (
-    filename: string,
-    key: keyof Region_Data
-  ): Promise<void> => {
-    try {
-      let result: any = await fetchData(filename, Object.keys(dataSet[key]));
-      setDataSet((prevData) => ({
-        ...prevData,
-        [key]: result,
-      }));
-    } catch (error) {
-      console.error(`데이터 가져오기 오류 (${key}):`, error);
-    }
-  };
-
-  const fetchDataAsync = async (): Promise<void> => {
-    await fetchDataAndUpdate(
-      "시·도별_인구대비_헌혈실적_20231116141055.csv",
-      "data"
-    );
-  };
-
-  useEffect(() => {
-    fetchDataAsync();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const { dataSet } = useDataFetching();
 
   const cityCode: MapKorea = {
     "kr-so": "서울",
