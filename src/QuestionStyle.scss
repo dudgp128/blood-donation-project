@@ -1,0 +1,84 @@
+.Q_text_content > ul {
+  list-style: none;
+  text-align: center;
+  margin: 0px;
+}
+
+.Q_text_content > ul > li {
+  display: inline-block;
+  color: #9c9c9c;
+  font-weight: 500;
+}
+
+.Q_text_content {
+  position: relative;
+  text-align: center;
+}
+
+.xs {
+  font-size: 13px;
+}
+
+.s {
+  font-size: 16px;
+}
+
+.m {
+  font-size: 19px;
+}
+
+.l {
+  font-size: 22px;
+}
+
+.xl {
+  font-size: 25px;
+}
+
+@font-face {
+  src: url("../public/font/Roboto-Medium.ttf");
+  font-family: "Roboto";
+}
+
+p {
+  font-family: "Roboto";
+  font-size: 30px;
+  margin-bottom: 0px;
+  font-weight: bold;
+}
+
+pre {
+  font-family: "Roboto";
+  font-size: 13px;
+}
+
+// Answer
+.Answer_content > div {
+  list-style: none;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  display: none;
+}
+.Answer_content > div > img {
+  width: 600px;
+}
+.Answer_content > div > ul {
+  list-style: none;
+}
+.Answer_content > div > ul > li {
+  text-align: left;
+  font-family: "Roboto";
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 13px;
+  margin-left: 20px;
+  line-height: 1.5;
+}
+.Answer_content > div > ul > .Answer {
+  font-size: 50px;
+  font-family: "Roboto";
+}
+.source_info {
+  font-size: 11px;
+}
