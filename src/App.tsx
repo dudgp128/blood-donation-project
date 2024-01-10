@@ -5,6 +5,8 @@ import Cover from "./containers/Cover";
 import ChartContainer from "./containers/ChartContainer";
 import { List } from "react-virtualized";
 import { useCallback } from "react";
+import Question from "./containers/Question";
+import Answer from "./containers/Answer";
 
 const Contents = styled.div`
   display: flex;
@@ -39,7 +41,10 @@ const App: React.FC = () => {
           rowHeight={1500}
           rowRenderer={rowRenderer}
           list={categorys}
+          style={{ width: "100%", display: "flex", justifyContent: "center" }}
         />
+        <Question />
+        <Answer />
       </Contents>
     </div>
   );

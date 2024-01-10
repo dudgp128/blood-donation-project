@@ -6,11 +6,11 @@ import { Titles } from "../model/chart";
 
 const Content = styled.div`
   background: #ffffff 0% 0% no-repeat padding-box;
+  box-sizing: border-box;
   box-shadow: 0px 5px 15px #0000000d;
   border-radius: 9px;
   width: 900px;
-  margin-left: auto;
-  margin-right: auto;
+
 
   & > div {
     position: relative;
