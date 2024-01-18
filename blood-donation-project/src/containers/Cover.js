@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const Content = styled.div`
-  margin: 0 auto;
+  
 
   & > div.contentWrapper {
     background-image: url(${process.env.PUBLIC_URL}/img_src/page_shape.svg);
