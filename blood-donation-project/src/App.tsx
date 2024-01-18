@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Header from "./components/Header";
 import Cover from "./containers/Cover";
 import ChartContainer from "./containers/ChartContainer";
-import { List } from "react-virtualized";
 import { useCallback } from "react";
 import Question from "./containers/Question";
 import Answer from "./containers/Answer";
@@ -15,19 +14,14 @@ const Contents = styled.div`
   position: relative;
   top: 100px;
   gap: 100px;
+
+  & > div {
+    margin: 0 auto;
+  }
 `;
 
 const App: React.FC = () => {
   const categorys = ["BLOOD_SUPPLIED_NUMBER_DONORS", "REGION_BLOOD"];
-
-  const rowRenderer = useCallback(
-    ({ index, key, style }: { index: number; key: string; style: object }) => {
-      return (
-        <ChartContainer key={key} style={style} category={categorys[index]} />
-      );
-    },
-    []
-  );
 
   return (
     <ContextProvider>
@@ -35,16 +29,9 @@ const App: React.FC = () => {
         <Header />
         <Contents>
           <Cover />
-          <List
-            autoHeight
-            height={3000}
-            width={1500}
-            rowCount={categorys.length}
-            rowHeight={1500}
-            rowRenderer={rowRenderer}
-            list={categorys}
-            style={{ width: "100%", display: "flex", justifyContent: "center" }}
-          />
+          {categorys.map((category, idx) => {
+            return <ChartContainer key={idx} category={category} />;
+          })}
           <Question />
           <Answer />
         </Contents>

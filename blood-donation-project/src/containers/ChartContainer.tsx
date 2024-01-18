@@ -1,8 +1,10 @@
 import styled from "styled-components";
 import Title from "../components/Title";
 import Explain from "../components/Explain";
+
 import { useState, useEffect } from "react";
 import { Titles } from "../model/chart";
+import Chart from "../components/Chart";
 
 const Content = styled.div`
   background: #ffffff 0% 0% no-repeat padding-box;
@@ -10,7 +12,6 @@ const Content = styled.div`
   box-shadow: 0px 5px 15px #0000000d;
   border-radius: 9px;
   width: 900px;
-
 
   & > div {
     position: relative;
@@ -36,28 +37,21 @@ const loadChart = async (category: string): Promise<React.FC<{}>> => {
 
 interface ChartContainerProps {
   category: string;
-  style: object;
 }
 
 const ChartContainer: React.FC<ChartContainerProps> = ({
   category,
-  style,
 }: ChartContainerProps) => {
   const [titles, setTitles] = useState<Titles>({
     titleContent: "",
     titleExplain: "",
   });
 
-  const [Chart, setChart] = useState<React.FC<{}> | null>(() => null);
-
   useEffect(() => {
     loadContent(category).then((loadedTitles) => {
       setTitles(loadedTitles);
     });
-    loadChart(category).then((Chart) => {
-      setChart(() => Chart);
-    });
-  }, [category, Chart]);
+  }, [category]);
 
   return (
     <Content>
@@ -66,8 +60,8 @@ const ChartContainer: React.FC<ChartContainerProps> = ({
           titleContent={titles.titleContent}
           titleExplain={titles.titleExplain}
         />
-        {Chart && <Chart />}
-        <Explain />
+        <Chart category={category} />
+        <Explain category={category} />
       </div>
     </Content>
   );

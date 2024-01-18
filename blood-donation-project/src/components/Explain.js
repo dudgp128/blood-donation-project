@@ -1,5 +1,7 @@
 import styled from "styled-components";
-import { ExplainContent } from "../chart/BLOOD_SUPPLIED_NUMBER_DONORS/ExplainContent";
+import BSND_ExplainContent from "../chart/BLOOD_SUPPLIED_NUMBER_DONORS/BSND_ExplainContent";
+import RB_ExplainContent from "../chart/REGION_BLOOD/RB_ExplainContent";
+
 const ChartExplainWrapper = styled.div`
   width: 450px;
   line-height: 2;
@@ -23,11 +25,18 @@ const ChartExplainWrapper = styled.div`
   }
 `;
 
-const Explain = () => {
+const Explain = ({ category }) => {
+  const list = {
+    BLOOD_SUPPLIED_NUMBER_DONORS: BSND_ExplainContent,
+    REGION_BLOOD: RB_ExplainContent,
+  };
+
+  const Component = list[category];
+
   return (
     <ChartExplainWrapper>
       <p>Chart summary</p>
-      {ExplainContent}
+      <Component />
     </ChartExplainWrapper>
   );
 };
