@@ -4,6 +4,11 @@ import React, { Fragment } from "react";
 import { Result, Tooltip } from "../../model/chart";
 import { useDataFetching } from "./useFetchData";
 
+// ****************
+// highchart lazy-loading
+//https://www.highcharts.com/demo/stock/lazy-loading
+// 관련해서 찾아보고, 적용하기
+
 const Chart: React.FC = () => {
   const { dataSet } = useDataFetching();
 
