@@ -7,6 +7,7 @@ import { List } from "react-virtualized";
 import { useCallback } from "react";
 import Question from "./containers/Question";
 import Answer from "./containers/Answer";
+import { ContextProvider } from "./contexts/Context";
 
 const Contents = styled.div`
   display: flex;
@@ -29,24 +30,26 @@ const App: React.FC = () => {
   );
 
   return (
-    <div className="App">
-      <Header />
-      <Contents>
-        <Cover />
-        <List
-          autoHeight
-          height={3000}
-          width={1500}
-          rowCount={categorys.length}
-          rowHeight={1500}
-          rowRenderer={rowRenderer}
-          list={categorys}
-          style={{ width: "100%", display: "flex", justifyContent: "center" }}
-        />
-        <Question />
-        <Answer />
-      </Contents>
-    </div>
+    <ContextProvider>
+      <div className="App">
+        <Header />
+        <Contents>
+          <Cover />
+          <List
+            autoHeight
+            height={3000}
+            width={1500}
+            rowCount={categorys.length}
+            rowHeight={1500}
+            rowRenderer={rowRenderer}
+            list={categorys}
+            style={{ width: "100%", display: "flex", justifyContent: "center" }}
+          />
+          <Question />
+          <Answer />
+        </Contents>
+      </div>
+    </ContextProvider>
   );
 };
 
