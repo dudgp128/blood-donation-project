@@ -12,7 +12,6 @@
 
 .Q_text_content > ul > li:hover {
   font-weight: bold;
-  font-size: 150%;
   cursor: pointer;
 }
 
@@ -41,6 +40,26 @@
   font-size: 25px;
 }
 
+.xs:hover {
+  font-size: 18px;
+}
+
+.s:hover {
+  font-size: 21px;
+}
+
+.m:hover {
+  font-size: 22px;
+}
+
+.l:hover {
+  font-size: 25px;
+}
+
+.xl:hover {
+  font-size: 27px;
+}
+
 @font-face {
   src: url("../public/font/Roboto-Medium.ttf");
   font-family: "Roboto";
@@ -59,6 +78,10 @@ pre {
 }
 
 // Answer
+.Answer_content {
+  min-height: 200px;
+  padding-bottom: 30px;
+}
 .Answer_content > div {
   list-style: none;
   text-align: center;

@@ -91,9 +91,6 @@ const Question = () => {
         </li>
       </ul>
       <ul>
-        <li className={"s"} id={"Q2"} style={isHighlighted("Q2")}>
-          수혈을 받아야하는 질병은?
-        </li>
         <li className={"s"} id={"Q1"} style={isHighlighted("Q1")}>
           헌혈로 에이즈와 같은 질병에 감염될 수 있다?
         </li>

@@ -20,7 +20,7 @@ const Answer = () => {
     isNumbersEqual(topic, id) ? { display: "inline-block" } : {};
 
   return (
-    <div className={"Answer_content"} style={{ margin: "30px" }}>
+    <div className={"Answer_content"}>
       <div className={"A0"} style={isVisible("A0")}>
         <ul>
           <li className={"Answer"}>NO</li>
@@ -58,15 +58,7 @@ const Answer = () => {
           </li>
         </ul>
       </div>
-      <div className={"A2"} style={isVisible("A2")}>
-        <p>답변</p>
-        <pre>질병 종류에 따른 혈액제제 사용량 상위 10개 질환입니다.</pre>
-        <img
-          src={"https://www.bloodinfo.net/image/bloodsupply_process_img03.gif"}
-          alt={"img"}
-        />
-        <pre className={"source_info"}> 출처 - 대한적십자사 혈액관리본부 </pre>
-      </div>
+
       <div className={"A3"} style={isVisible("A3")}>
         <p>답변</p>
         <pre>
@@ -80,18 +72,21 @@ const Answer = () => {
         <p>답변</p>
         <pre>
           크게 수혈용과 의약품제조용 혈액공급으로 나뉘며, 아래와 같은 절차로
-          공급됩니다. 수혈용 혈액공급
+          공급됩니다.
         </pre>
+        <pre style={{ marginBottom: "0px" }}>수혈용 혈액공급</pre>
         <img
-          src={"https://www.bloodinfo.net/image/bloodsupply_process_img01.gif"}
+          src={
+            "https://www.bloodinfo.net/upload/bloodinfo/knrcbs/editor/20231123/IMG_162000.png"
+          }
           alt={"img"}
         />
-        <pre style={{ margin: "40px 0px", marginBottom: "20px" }}>
-          의약품제조용 혈액공급
-        </pre>
+        <br />
+        <pre style={{ marginBottom: "0px" }}>의약품제조용 혈액공급</pre>
         <img
-          style={{ width: "37%" }}
-          src={"https://www.bloodinfo.net/image/bloodsupply_process_img02.gif"}
+          src={
+            "https://www.bloodinfo.net/upload/bloodinfo/knrcbs/editor/20231123/IMG_162003.png"
+          }
           alt={"img"}
         />
         <pre className={"source_info"}> 출처 - 대한적십자사 혈액관리본부 </pre>
@@ -140,8 +135,8 @@ const Answer = () => {
           <li className={"Answer"}>NO</li>
           <li>
             파주는 말리리아 위험 지역으로 헌혈이 제한되어있습니다.
-            <span style={{ fontSize: "10px", marginTop: "0px" }}>
-              (말라리아 위험 지역 : 3년 평균 인구 10만명 당 10명이상 말라리아가
+            <span>
+              (말라리아 위험 지역 : 3년 평균 인구 10만명 당 10명이상 말라리아
               발생한 지역)
             </span>
             <br />이 지역에 거주나 복무 시에 2년간, 여행 시는 1년간 전혈헌혈 및
@@ -198,7 +193,12 @@ const Answer = () => {
       </div>
       <div className={"A11"} style={isVisible("A11")}>
         <ul>
-          <li className={"Answer"}>NO</li>
+          <li
+            className={"Answer"}
+            style={{ display: "block", textAlign: "center" }}
+          >
+            NO
+          </li>
           <li style={{ textAlign: "center" }}>
             헌혈 후 검사에 아래와 같은 항목이 포함됩니다
             <br />
