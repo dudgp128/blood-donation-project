@@ -1,4 +1,30 @@
-const mapSouthKorean = {
+interface MapSouthKorean {
+  title: string;
+  version: string;
+  type: string;
+  copyright: string;
+  copyrightShort: string;
+  copyrightUrl: string;
+  crs: {
+    type: string;
+    properties: {
+      name: string;
+    };
+  };
+  "hc-transform": {
+    default: {
+      crs: string;
+      scale: number;
+      jsonres: number;
+      jsonmarginX: number;
+      jsonmarginY: number;
+      xoffset: number;
+      yoffset: number;
+    };
+  };
+  features: any[]; // 이 부분은 실제 타입이 아직 알려지지 않았으므로 any를 사용합니다.
+}
+const mapSouthKorean: MapSouthKorean = {
   title: "South Korea",
   version: "2.1.0",
   type: "FeatureCollection",
