@@ -31,7 +31,8 @@ const HeaderContainer = styled.div`
     }
   }
 `;
-const Header = () => {
+
+const Header: React.FC = () => {
   return (
     <HeaderContainer>
       <a href="https://www.bloodinfo.net/knrcbs/main.do">

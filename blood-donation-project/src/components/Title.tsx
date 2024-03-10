@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Titles } from "../model/chart";
 
 const TitleWrapper = styled.div`
   & > div.title {
@@ -14,7 +15,7 @@ const TitleWrapper = styled.div`
   }
 `;
 
-const Title = ({ titleContent, titleExplain }) => {
+const Title: React.FC<Titles> = ({ titleContent, titleExplain }) => {
   return (
     <TitleWrapper>
       <div className="title">
